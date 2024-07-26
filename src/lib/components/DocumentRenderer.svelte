@@ -44,30 +44,35 @@
 			console.warn('[RENDERER] Typst not loaded or no svg function found!');
 			return;
 		}
-		globalThis.$typst.svg({ mainContent }).then((svg) => {
-			console.log(`[RENDERER] Rendered SvgElement { len: ${svg.length} }`);
-			// append svg text
-			canvas.innerHTML = svg;
 
-			const svgElem = canvas.firstElementChild;
-			if (!svgElem) {
-				console.error('[RENDERER] No SVG element was rendered!');
-				return;
-			}
+		globalThis.$typst
+			.svg({ mainContent })
+			.then((svg) => {
+				console.log(`[RENDERER] Rendered SvgElement { len: ${svg.length} }`);
+				canvas.innerHTML = svg;
 
-			const w = svgElem.getAttribute('width');
-			const h = svgElem.getAttribute('height');
-			if (!w || !h) {
-				console.error('[RENDERER] No width or height attribute found!');
-				return;
-			}
+				const svgElem = canvas.firstElementChild;
+				if (!svgElem) {
+					console.error('[RENDERER] No SVG element was rendered!');
+					return;
+				}
 
-			const width = Number.parseFloat(w);
-			const height = Number.parseFloat(h);
-			const cw = document.body.clientWidth - 40;
-			svgElem.setAttribute('width', cw.toString());
-			svgElem.setAttribute('height', ((height * cw) / width).toString());
-		});
+				const w = svgElem.getAttribute('width');
+				const h = svgElem.getAttribute('height');
+				if (!w || !h) {
+					console.error('[RENDERER] No width or height attribute found!');
+					return;
+				}
+
+				const width = Number.parseFloat(w);
+				const height = Number.parseFloat(h);
+				const cw = canvas.clientWidth;
+				svgElem.setAttribute('width', cw.toString());
+				svgElem.setAttribute('height', ((height * cw) / width).toString());
+			})
+			.catch((err) => {
+				console.error('[RENDERER] Error rendering SVG:', err);
+			});
 	}
 
 	$effect(() => {
