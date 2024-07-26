@@ -9,11 +9,12 @@ declare global {
 		// interface Platform {}
 	}
 
+	// eslint-disable-next-line no-var
 	var $typst: {
-		setCompilerInitOptions: (options: any) => void;
-		setRendererInitOptions: (options: any) => void;
-		svg: (options: any) => Promise<string>;
-	}
+		setCompilerInitOptions: (options: { getModule: () => string }) => void;
+		setRendererInitOptions: (options: { getModule: () => string }) => void;
+		svg?: (options: { mainContent: string }) => Promise<string>;
+	};
 }
 
 export {};
