@@ -8,5 +8,8 @@ export default {
 		extend: {}
 	},
 
-	plugins: [daisyui]
+	plugins: [daisyui],
+	daisyui: {
+		themes: ['black']
+	}
 } as Config;

@@ -13,9 +13,10 @@
 
 	let { content }: Props = $props();
 
-	let canvas: HTMLElement;
+	let loaded = $state(false);
+	let canvas = $state<HTMLElement | null>(null);
 
-	onMount(() => {
+	onMount(async () => {
 		if (!browser) {
 			return;
 		}
@@ -37,11 +38,17 @@
 			});
 			previewSvg(content);
 		});
+
+		loaded = true;
 	});
 
 	function previewSvg(mainContent: string) {
-		if (!globalThis.$typst || !globalThis.$typst.svg) {
-			console.warn('[RENDERER] Typst not loaded or no svg function found!');
+		if (!globalThis.$typst) {
+			console.warn('[RENDERER] Typst not loaded!');
+			return;
+		}
+		if (!globalThis.$typst.svg) {
+			console.warn('[RENDERER] No svg function found!');
 			return;
 		}
 
@@ -49,6 +56,11 @@
 			.svg({ mainContent })
 			.then((svg) => {
 				console.log(`[RENDERER] Rendered SvgElement { len: ${svg.length} }`);
+				if (!canvas) {
+					console.warn('[RENDERER] No canvas to render to!');
+					return;
+				}
+
 				canvas.innerHTML = svg;
 
 				const svgElem = canvas.firstElementChild;
@@ -81,5 +93,9 @@
 	});
 </script>
 
-<p>{content}</p>
-<div bind:this={canvas}></div>
+<div
+	bind:this={canvas}
+	class="w-full max-w-xl rounded-box"
+	class:bg-white={loaded}
+	class:skeleton={!loaded}
+></div>
