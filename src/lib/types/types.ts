@@ -15,10 +15,7 @@ export type CV = {
 	};
 	skills: {
 		heading: string;
-		categories: {
-			label: string;
-			items: string[];
-		}[];
+		categories: CvSkillCategory[];
 	};
 	other: {
 		heading: string;
@@ -59,4 +56,10 @@ export type CvJobPosition = {
 	start: string;
 	end: string;
 	bulletPoints: string[];
+};
+
+export type CvSkillCategory = {
+	id: string;
+	label: string;
+	items: string[];
 };

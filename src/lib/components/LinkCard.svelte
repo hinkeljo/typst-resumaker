@@ -23,7 +23,7 @@
 		bind:value={link.url}
 	/>
 	<button
-		class="btn btn-square btn-error join-item btn-sm"
+		class="btn btn-square join-item btn-active btn-sm"
 		onclick={() => {
 			handleDelete(link.id);
 		}}>X</button

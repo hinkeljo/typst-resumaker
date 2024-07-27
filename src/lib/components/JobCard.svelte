@@ -33,7 +33,7 @@
 	/>
 	<button class="btn btn-primary join-item btn-sm" onclick={openModal}>Edit details</button>
 	<button
-		class="btn btn-square btn-error join-item btn-sm"
+		class="btn btn-square join-item btn-active btn-sm"
 		onclick={() => {
 			handleDelete(job.id);
 		}}>X</button
