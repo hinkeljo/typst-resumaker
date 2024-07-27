@@ -95,7 +95,7 @@
 
 <div
 	bind:this={canvas}
-	class="w-full max-w-xl rounded-box"
+	class="w-full max-w-xl rounded-box border-2 border-solid border-primary"
 	class:bg-white={loaded}
 	class:skeleton={!loaded}
 ></div>

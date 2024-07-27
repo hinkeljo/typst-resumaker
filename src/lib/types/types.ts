@@ -1,17 +1,9 @@
 export type CV = {
 	name: string;
-	links: {
-		label: string;
-		url: string;
-	}[];
+	links: CvLink[];
 	education: {
 		heading: string;
-		schools: {
-			name: string;
-			start: string;
-			end: string;
-			description: string;
-		}[];
+		schools: CvSchool[];
 	};
 	experience: {
 		heading: string;
@@ -42,4 +34,19 @@ export type CV = {
 			description: string;
 		}[];
 	};
+};
+
+export type CvLink = {
+	id: string;
+	label: string;
+	url: string;
+};
+
+export type CvSchool = {
+	id: string;
+	name: string;
+	place: string;
+	start: string;
+	end: string;
+	description: string;
 };

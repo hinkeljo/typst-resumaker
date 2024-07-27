@@ -1,7 +1,9 @@
 import type { CV } from '$lib/types/types';
 
 function createState() {
-	let cv = $state<CV>(loadCV());
+	const cv = $state<CV>(loadCV());
+
+	console.log('Loaded CV:', cv);
 
 	return {
 		get cv() {

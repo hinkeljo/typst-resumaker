@@ -1,22 +1,34 @@
 <script lang="ts">
 	import { appState } from '$lib/client/state.svelte';
 	import DocumentRenderer from '$lib/components/DocumentRenderer.svelte';
+	import TabAboutYou from '$lib/components/TabAboutYou.svelte';
+	import TabEducation from '$lib/components/TabEducation.svelte';
 
-	let content = $state('Hi mom!');
+	let activeTab = $state(0);
+	const tabs = ['About you', 'Education', 'Experience', 'Skills', 'Other'];
 </script>
 
 <div class="flex flex-row gap-8">
-	<div class="flex-1">
-		<input
-			type="text"
-			placeholder="Your name"
-			class="input input-bordered w-full max-w-xs"
-			bind:value={appState.cv.name}
-		/>
-		<pre>{JSON.stringify(appState.cv, null, 4)}</pre>
-		<textarea bind:value={content} class="textarea textarea-bordered" placeholder="Bio"></textarea>
+	<div class="flex flex-1 flex-col gap-4">
+		<div role="tablist" class="tabs-boxed tabs">
+			{#each tabs as tab, index}
+				<button
+					class="tab"
+					class:tab-active={index === activeTab}
+					onclick={() => {
+						activeTab = index;
+					}}>{tab}</button
+				>
+			{/each}
+		</div>
+		{#if activeTab === 0}
+			<TabAboutYou />
+		{/if}
+		{#if activeTab === 1}
+			<TabEducation />
+		{/if}
 	</div>
 	<div>
-		<DocumentRenderer {content} />
+		<DocumentRenderer content={JSON.stringify(appState.cv, null, 4)} />
 	</div>
 </div>
