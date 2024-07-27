@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { appState } from '$lib/client/state.svelte';
+	import { parseTemplate } from '$lib/client/template';
 	import DocumentRenderer from '$lib/components/DocumentRenderer.svelte';
 	import TabAboutYou from '$lib/components/TabAboutYou.svelte';
 	import TabEducation from '$lib/components/TabEducation.svelte';
@@ -41,6 +42,6 @@
 		{/if}
 	</div>
 	<div>
-		<DocumentRenderer content={JSON.stringify(appState.cv, null, 4)} />
+		<DocumentRenderer content={parseTemplate(appState.cv)} />
 	</div>
 </div>
