@@ -19,12 +19,7 @@ export type CV = {
 	};
 	other: {
 		heading: string;
-		items: {
-			name: string;
-			place: string;
-			date: string;
-			description: string;
-		}[];
+		items: CvOtherItem[];
 	};
 };
 
@@ -62,4 +57,12 @@ export type CvSkillCategory = {
 	id: string;
 	label: string;
 	items: string[];
+};
+
+export type CvOtherItem = {
+	id: string;
+	name: string;
+	place: string;
+	date: string;
+	description: string;
 };
