@@ -5,8 +5,6 @@
 		PUBLIC_TYPST_TS_COMPILER_URL,
 		PUBLIC_TYPST_TS_RENDERER_URL
 	} from '$env/static/public';
-	import { appState } from '$lib/client/state.svelte';
-	import { parseTemplate } from '$lib/client/template';
 	import { onMount } from 'svelte';
 
 	interface Props {
@@ -90,7 +88,7 @@
 	}
 
 	$effect(() => {
-		console.log(`[RENDERER] Content changed! Rerendering...`, content);	
+		console.log(`[RENDERER] Content changed! Rerendering...`, content);
 		render(content);
 	});
 </script>

@@ -1,14 +1,11 @@
-import type { CV, CvJob, CvOtherItem, CvSchool } from "$lib/types/types";
+import type { CV, CvJob, CvOtherItem, CvSchool } from '$lib/types/types';
 
-let renderCount = 0;
+export function parseTemplate(data: CV) {
+	return renderTemplate(data);
+}
 
-export function parseTemplate (data: CV) {
-    renderCount++;
-    return renderTemplate(data);
-};
-
-function renderTemplate (data: CV) {
-    return `
+function renderTemplate(data: CV) {
+	return `
         ${renderLayout()}
         #align(
             center, 
@@ -28,11 +25,11 @@ function renderTemplate (data: CV) {
         ${renderExperienceSection(data)}
         ${renderSkillSection(data)}
         ${renderOtherSection(data)}
-    `; 
+    `;
 }
 
-function renderSectionHeader (heading: string) {
-    return `
+function renderSectionHeader(heading: string) {
+	return `
         #grid(
             columns: (auto, 1fr),
             [= ${heading}], 
@@ -45,37 +42,31 @@ function renderSectionHeader (heading: string) {
     `;
 }
 
-function renderLinks (data: CV) {
-    let i = 0; 
-    let res = ''; 
-    for(const link of data.links) {
-        res += `#link("${link.url}")[${link.label.replace('@', '\\@')}]`; 
-        if(i < data.links.length - 1) {
-            res += ' · '; 
-        }
-        i++; 
-    }
-    return res; 
+function renderLinks(data: CV) {
+	return data.links
+		.map((link) => {
+			return `#link("${link.url}")[${link.label.replace('@', '\\@')}]`;
+		})
+		.join(' · ');
 }
 
 function renderEducationSection(data: CV) {
-    if(data.education.schools.length === 0) return ''; 
+	if (data.education.schools.length === 0) return '';
 
-    let items = '';
-    for(const item of data.education.schools) {
-        items += `
-            #v(_spacing)
-            ${renderEducationItem(item)}
-        `;
-    }
-    return `
+	const items = data.education.schools
+		.map((item) => {
+			return `#v(_spacing) ${renderEducationItem(item)}`;
+		})
+		.join(' ');
+
+	return `
         ${renderSectionHeader(data.education.heading)}
         ${items}
-    `; 
+    `;
 }
 
-function renderEducationItem (item: CvSchool) {
-    return `
+function renderEducationItem(item: CvSchool) {
+	return `
         #grid(
             columns: (1fr, auto),
             align(left)[
@@ -87,33 +78,36 @@ function renderEducationItem (item: CvSchool) {
                 ${item.start} - ${item.end} \\
             ]
         )
-    `; 
+    `;
 }
 
 function renderExperienceSection(data: CV) {
-    if(data.experience.jobs.length === 0) return ''; 
+	if (data.experience.jobs.length === 0) return '';
 
-    let items = '';
-    for(const item of data.experience.jobs) {
-        items += `
-            ${renderJobItem(item)}
-        `;
-    }
-    return `
+	const items = data.experience.jobs
+		.map((item) => {
+			return renderJobItem(item);
+		})
+		.join(' ');
+
+	return `
         #v(_spacing * 2)
         ${renderSectionHeader(data.experience.heading)}
         #v(_spacing)
         ${items}
-    `; 
+    `;
 }
 
-function renderJobItem (item: CvJob) {
-    const positions = item.positions.map((position) => {
-        const bullets = position.bulletPoints.map((bullet) => {
-            return `- ${bullet} \n `; 
-        }).join(' ');
+function renderJobItem(item: CvJob) {
+	const positions = item.positions
+		.map((position) => {
+			const bullets = position.bulletPoints
+				.map((bullet) => {
+					return `- ${bullet} \n `;
+				})
+				.join(' ');
 
-        return `
+			return `
             #grid(
                 columns: (1fr, auto),
                 align(left)[
@@ -126,11 +120,11 @@ function renderJobItem (item: CvJob) {
             #v(_spacing / 2)
             #text[${bullets}]
             #v(_spacing)
-        `; 
-    }).join(' '); 
+        `;
+		})
+		.join(' ');
 
-
-    return `
+	return `
         #grid(
             columns: (1fr, auto),
             align(left)[
@@ -143,17 +137,19 @@ function renderJobItem (item: CvJob) {
         #v(_spacing / 2)
         ${positions}
         #v(_spacing)
-    `; 
+    `;
 }
 
 function renderSkillSection(data: CV) {
-    if(data.skills.categories.length === 0) return ''; 
+	if (data.skills.categories.length === 0) return '';
 
-    let items: string[] = [];
-    for(const item of data.skills.categories) {
-        items.push(`[${item.label}:], [${item.items.join(', ')}]`);
-    }
-    return `
+	const items = data.skills.categories
+		.map((category) => {
+			return `[${category.label}:], [${category.items.join(', ')}]`;
+		})
+		.join(', ');
+
+	return `
         #v(_spacing * 2)
         ${renderSectionHeader(data.skills.heading)}
         ${data.skills.categories.length > 0 ? '#v(_spacing)' : ''}
@@ -161,30 +157,29 @@ function renderSkillSection(data: CV) {
             columns: (auto, 1fr),
             row-gutter: _spacing,
             column-gutter: _spacing * 2,
-            ${items.join(', ')}
+            ${items}
         )
-    `; 
+    `;
 }
 
 function renderOtherSection(data: CV) {
-    if(data.other.items.length === 0) return ''; 
+	if (data.other.items.length === 0) return '';
 
-    let items = '';
-    for(const item of data.other.items) {
-        items += `
-            #v(_spacing)
-            ${renderOtherItem(item)}
-        `;
-    }
-    return `
+	const items = data.other.items
+		.map((item) => {
+			return `#v(_spacing) ${renderOtherItem(item)}`;
+		})
+		.join(' ');
+
+	return `
         #v(_spacing * 2)
         ${renderSectionHeader(data.other.heading)}
         ${items}
-    `; 
+    `;
 }
 
-function renderOtherItem (item: CvOtherItem) {
-    return `
+function renderOtherItem(item: CvOtherItem) {
+	return `
         #grid(
             columns: (1fr, auto),
             align(left)[
@@ -195,11 +190,11 @@ function renderOtherItem (item: CvOtherItem) {
             ]
         )
         #text[${item.description}]
-    `; 
+    `;
 }
 
-function renderLayout () {
-    return `
+function renderLayout() {
+	return `
         #set page(
             paper: "a4",
             margin: 2cm,
@@ -237,5 +232,5 @@ function renderLayout () {
             #set text(12pt, weight: "regular", style: "italic")
             #text[#it.body]
         ]
-    `; 
+    `;
 }
