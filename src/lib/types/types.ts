@@ -1,3 +1,7 @@
+export type Settings = {
+	useLocalStorage: boolean;
+};
+
 export type CV = {
 	name: string;
 	links: CvLink[];
@@ -7,16 +11,7 @@ export type CV = {
 	};
 	experience: {
 		heading: string;
-		jobs: {
-			company: string;
-			place: string;
-			positions: {
-				title: string;
-				start: string;
-				end: string;
-				bulletPoints: string[];
-			};
-		}[];
+		jobs: CvJob[];
 	};
 	skills: {
 		heading: string;
@@ -49,4 +44,19 @@ export type CvSchool = {
 	start: string;
 	end: string;
 	description: string;
+};
+
+export type CvJob = {
+	id: string;
+	company: string;
+	place: string;
+	positions: CvJobPosition[];
+};
+
+export type CvJobPosition = {
+	id: string;
+	title: string;
+	start: string;
+	end: string;
+	bulletPoints: string[];
 };

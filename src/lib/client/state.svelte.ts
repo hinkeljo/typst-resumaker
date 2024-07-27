@@ -1,13 +1,15 @@
-import type { CV } from '$lib/types/types';
+import type { CV, Settings } from '$lib/types/types';
 
 function createState() {
 	const cv = $state<CV>(loadCV());
-
-	console.log('Loaded CV:', cv);
+	const settings = $state<Settings>({ useLocalStorage: false });
 
 	return {
 		get cv() {
 			return cv;
+		},
+		get settings() {
+			return settings;
 		}
 	};
 }

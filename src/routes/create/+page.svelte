@@ -3,6 +3,7 @@
 	import DocumentRenderer from '$lib/components/DocumentRenderer.svelte';
 	import TabAboutYou from '$lib/components/TabAboutYou.svelte';
 	import TabEducation from '$lib/components/TabEducation.svelte';
+	import TabExperience from '$lib/components/TabExperience.svelte';
 
 	let activeTab = $state(0);
 	const tabs = ['About you', 'Education', 'Experience', 'Skills', 'Other'];
@@ -26,6 +27,9 @@
 		{/if}
 		{#if activeTab === 1}
 			<TabEducation />
+		{/if}
+		{#if activeTab === 2}
+			<TabExperience />
 		{/if}
 	</div>
 	<div>
