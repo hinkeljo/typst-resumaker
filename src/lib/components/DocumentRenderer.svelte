@@ -48,14 +48,14 @@
 			return;
 		}
 		if (!globalThis.$typst.svg) {
-			console.warn('[RENDERER] No svg function found!');
+			console.warn('[RENDERER] No render function found!');
 			return;
 		}
 
 		globalThis.$typst
 			.svg({ mainContent })
 			.then((svg) => {
-				console.log(`[RENDERER] Rendered SvgElement { len: ${svg.length} }`);
+				console.log(`[RENDERER] Successfully rendered SVG!`);
 				if (!canvas) {
 					console.warn('[RENDERER] No canvas to render to!');
 					return;
@@ -88,14 +88,54 @@
 	}
 
 	$effect(() => {
-		console.log(`[RENDERER] Content changed! Rerendering...`, content);
+		console.log(`[RENDERER] Content changed! Rerendering...`);
 		render(content);
 	});
+
+	function downloadPDF() {
+		if (!globalThis.$typst) {
+			console.warn('[RENDERER] Typst not loaded!');
+			return;
+		}
+		if (!globalThis.$typst.pdf) {
+			console.warn('[RENDERER] Typst not loaded!');
+			return;
+		}
+		globalThis.$typst.pdf({ mainContent: content }).then((pdfData) => {
+			const pdfFile = new Blob([pdfData], { type: 'application/pdf' });
+
+			const link = document.createElement('a');
+			link.href = URL.createObjectURL(pdfFile);
+			link.target = '_blank';
+			link.download = 'resume.pdf';
+			link.click();
+			URL.revokeObjectURL(link.href);
+		});
+	}
+
+	function downloadTypst() {
+		// create .typ file with content
+		const typFile = new Blob([content], { type: 'text/plain' });
+
+		const link = document.createElement('a');
+		link.href = URL.createObjectURL(typFile);
+		link.download = 'resume.typ';
+		link.click();
+		URL.revokeObjectURL(link.href);
+	}
 </script>
 
-<div
-	bind:this={canvas}
-	class="w-full max-w-xl rounded-box border-2 border-solid border-primary"
-	class:bg-white={loaded}
-	class:skeleton={!loaded}
-></div>
+<div class="flex flex-col items-center gap-4">
+	<div
+		bind:this={canvas}
+		class="w-full max-w-lg rounded-box border-2 border-solid border-primary"
+		class:bg-white={loaded}
+		class:skeleton={!loaded}
+	></div>
+	<div class="join">
+		<button class="btn btn-primary join-item btn-sm" onclick={downloadPDF}>Download PDF</button>
+		<button class="btn btn-outline btn-primary join-item btn-sm" onclick={downloadTypst}
+			>Download Typst</button
+		>
+	</div>
+</div>

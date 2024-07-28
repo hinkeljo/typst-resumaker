@@ -14,6 +14,7 @@ declare global {
 		setCompilerInitOptions: (options: { getModule: () => string }) => void;
 		setRendererInitOptions: (options: { getModule: () => string }) => void;
 		svg?: (options: { mainContent: string }) => Promise<string>;
+		pdf?: (options: { mainContent: string }) => Promise<string>;
 	};
 }
 
