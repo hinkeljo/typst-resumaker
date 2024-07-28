@@ -127,17 +127,17 @@
 	}
 </script>
 
-<div class="flex flex-col items-center gap-4">
-	<div
-		bind:this={canvas}
-		class="w-full max-w-lg rounded-box border-2 border-solid border-primary"
-		class:bg-white={loaded}
-		class:skeleton={!loaded}
-	></div>
+<div class="flex flex-col items-center gap-2 md:gap-4">
 	<div class="join">
 		<button class="btn btn-primary join-item btn-sm" onclick={downloadPDF}>Download PDF</button>
 		<button class="btn btn-outline btn-primary join-item btn-sm" onclick={downloadTypst}
 			>Download Typst</button
 		>
 	</div>
+	<div
+		bind:this={canvas}
+		class="w-full max-w-xl rounded-box border-2 border-solid border-primary"
+		class:bg-white={loaded}
+		class:skeleton={!loaded}
+	></div>
 </div>

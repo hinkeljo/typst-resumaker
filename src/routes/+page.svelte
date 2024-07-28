@@ -12,9 +12,9 @@
 	const tabs = ['About you', 'Education', 'Experience', 'Skills', 'Other'];
 </script>
 
-<div class="flex flex-row gap-8">
+<div class="flex flex-col gap-4 md:flex-row md:gap-8">
 	<div class="flex flex-1 flex-col gap-4">
-		<div role="tablist" class="tabs-boxed tabs">
+		<div role="tablist" class="tabs-boxed tabs tabs-xs md:tabs-md">
 			{#each tabs as tab, index}
 				<button
 					class="tab"

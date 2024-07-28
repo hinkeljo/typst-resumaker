@@ -18,7 +18,7 @@
 	/>
 	<input
 		type="text"
-		class="input input-sm join-item input-bordered input-primary grow"
+		class="input input-sm join-item input-bordered input-primary w-36 md:grow"
 		placeholder="Target"
 		bind:value={link.url}
 	/>
