@@ -1,5 +1,4 @@
 <script>
-	import Navbar from '$lib/components/Navbar.svelte';
 	import Settings from '$lib/components/Settings.svelte';
 	import '../app.css';
 </script>
@@ -8,7 +7,6 @@
 	class="sticky top-0 z-50 flex w-full flex-row items-center justify-between border-b-2 border-b-primary bg-base-100 bg-opacity-50 p-4 backdrop-blur-lg"
 >
 	<p class="text-4xl">Typst Resume Maker</p>
-	<Navbar />
 	<Settings />
 </header>
 <div class="flex h-full min-h-full flex-col items-center p-4">
