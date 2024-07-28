@@ -110,6 +110,7 @@
 			link.download = 'resume.pdf';
 			link.click();
 			URL.revokeObjectURL(link.href);
+			link.remove();
 		});
 	}
 
@@ -122,6 +123,7 @@
 		link.download = 'resume.typ';
 		link.click();
 		URL.revokeObjectURL(link.href);
+		link.remove();
 	}
 </script>
 
