@@ -89,7 +89,7 @@
 				class="file-input file-input-bordered file-input-primary file-input-sm"
 			/>
 		</div>
-		<div class="md-flex-row flex w-full flex-col gap-1 px-1 py-2 md:items-center md:gap-4">
+		<div class="flex w-full flex-col gap-1 px-1 py-2 md:flex-row md:items-center md:gap-4">
 			<span class="label-text">Export data</span>
 			<button class="btn btn-primary btn-sm" onclick={exportData}>Export</button>
 		</div>
